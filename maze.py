@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-from ev3dev2.motor import LargeMotor, OUTPUT_A, OUTPUT_D, SpeedPercent, MoveTank
+from ev3dev2.motor import OUTPUT_A, OUTPUT_D, SpeedPercent, MoveSteering
 from ev3dev2.sensor import INPUT_1, INPUT_4
-from ev3dev2.sensor.lego import TougtchSensor, UltrasonicSensor
+from ev3dev2.sensor.lego import TouchSensor, UltrasonicSensor
 
 import os
 import sys
@@ -10,6 +10,11 @@ import time
 # state constants
 ON = True
 OFF = False
+
+distance_sensor = UltrasonicSensor(INPUT_1)
+e_stop = TouchSensor(INPUT_4)
+
+distance_sensor.mode = 'US-DIST-CM'
 
 
 def debug_print(*args, **kwargs):
@@ -32,7 +37,7 @@ def set_font(name):
 
 
 def main():
-    # set the console just how we want it
+    tank_drive = MoveSteering(OUTPUT_A, OUTPUT_D)
     reset_console()
     set_cursor(OFF)
     set_font('Lat15-Terminus24x12')
@@ -43,8 +48,13 @@ def main():
     # print something to the output panel in VS Code
     debug_print('Running')
 
-    # wait a bit, so you have time to look at the display before the program
-    # exits
+    tank_drive.on(0, SpeedPercent(75))
+
+    while not e_stop.value():
+        distance = distance_sensor.value() / 10
+        while distance <= 15:
+            tank_drive.on_for_seconds(0, -75, 1)
+            tank_drive.on_for_seconds()
     time.sleep(5)
 
 
