@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
+import random
+
 from ev3dev2.motor import OUTPUT_A, OUTPUT_D, SpeedPercent, MoveSteering
 from ev3dev2.sensor import INPUT_1, INPUT_4
 from ev3dev2.sensor.lego import TouchSensor, UltrasonicSensor
 
 import os
 import sys
-import time
 
 # state constants
 ON = True
@@ -54,8 +55,7 @@ def main():
         distance = distance_sensor.value() / 10
         while distance <= 15:
             tank_drive.on_for_seconds(0, -75, 1)
-            tank_drive.on_for_seconds()
-    time.sleep(5)
+            tank_drive.on_for_seconds(100-200*random.randint(0, 1), 75, 0.7)
 
 
 if __name__ == '__main__':
