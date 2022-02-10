@@ -50,12 +50,16 @@ def main():
     debug_print('Running')
 
     tank_drive.on(0, SpeedPercent(75))
-
+    last3_numbers = []
     while not e_stop.value():
         distance = distance_sensor.value() / 10
-        while distance <= 15:
+        distance_average = sum(last3_numbers, distance)/4
+        if distance_average <= 7:
             tank_drive.on_for_seconds(0, -75, 1)
             tank_drive.on_for_seconds(100-200*random.randint(0, 1), 75, 0.7)
+        last3_numbers[0] = last3_numbers[1]
+        last3_numbers[1] = last3_numbers[2]
+        last3_numbers[2] = distance
 
 
 if __name__ == '__main__':

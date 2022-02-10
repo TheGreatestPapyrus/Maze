@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f783676e-de1a-4312-9946-077fc5cca269" name="Changes" comment="Ok adding in previous code">
+    <list default="true" id="f783676e-de1a-4312-9946-077fc5cca269" name="Changes" comment="Random Direction Code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/maze.py" beforeDir="false" afterPath="$PROJECT_DIR$/maze.py" afterDir="false" />
     </list>
@@ -48,7 +48,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644449419242</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Random Direction Code">
+      <created>1644457085067</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1644457085067</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -64,6 +71,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Ok adding in previous code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ok adding in previous code" />
+    <MESSAGE value="Random Direction Code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Random Direction Code" />
   </component>
 </project>
