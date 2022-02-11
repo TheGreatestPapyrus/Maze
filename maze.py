@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from dis import dis
 import random
 
 from ev3dev2.motor import OUTPUT_A, OUTPUT_D, SpeedPercent, MoveSteering
@@ -41,7 +42,7 @@ def main():
     tank_drive = MoveSteering(OUTPUT_A, OUTPUT_D)
     reset_console()
     set_cursor(OFF)
-    set_font('Lat15-Terminus24x12')
+    set_font('Lat15-Terminus22x11')
 
     # print something to the screen of the device
     print('Completing Maze...')
@@ -49,14 +50,21 @@ def main():
     # print something to the output panel in VS Code
     debug_print('Running')
 
-    tank_drive.on(0, SpeedPercent(75))
-    last3_numbers = []
+    tank_drive.on(0, SpeedPercent(100))
+    last3_numbers = [100, 100, 100]
+    multiply = 1
+    direction = -100
     while not e_stop.value():
-        distance = distance_sensor.value() / 10
-        distance_average = sum(last3_numbers, distance)/4
-        if distance_average <= 7:
-            tank_drive.on_for_seconds(0, -75, 1)
-            tank_drive.on_for_seconds(100-200*random.randint(0, 1), 75, 0.7)
+        distance = round(distance_sensor.value())
+        distance_average = round(sum(last3_numbers, distance)/4)
+        if distance_average <= 15 and distance != 0 and distance_average != 0:
+            tank_drive.off()
+            tank_drive.on_for_seconds(0, SpeedPercent(-75), 0.1)
+            tank_drive.on_for_seconds(direction, SpeedPercent(75), 0.88 * multiply)
+            tank_drive.off()
+        else:
+            tank_drive.on(0, SpeedPercent(100))
+        if distance == 0: return
         last3_numbers[0] = last3_numbers[1]
         last3_numbers[1] = last3_numbers[2]
         last3_numbers[2] = distance
