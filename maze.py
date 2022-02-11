@@ -61,6 +61,5 @@ def main():
         last3_numbers[1] = last3_numbers[2]
         last3_numbers[2] = distance
 
-
 if __name__ == '__main__':
     main()
