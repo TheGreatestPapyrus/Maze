@@ -39,7 +39,7 @@ def set_font(name):
 
 
 def main():
-    tank_drive = MoveSteering(OUTPUT_A, OUTPUT_D)
+    tank_drive = MoveSteering(OUTPUT_D, OUTPUT_A)
     reset_console()
     set_cursor(OFF)
     set_font('Lat15-Terminus22x11')
@@ -59,12 +59,19 @@ def main():
         distance_average = round(sum(last3_numbers, distance)/4)
         if distance_average <= 15 and distance != 0 and distance_average != 0:
             tank_drive.off()
+            debug_print(multiply)
+            if multiply == 2:
+                direction = direction * -1
             tank_drive.on_for_seconds(0, SpeedPercent(-75), 0.1)
-            tank_drive.on_for_seconds(direction, SpeedPercent(75), 0.88 * multiply)
+            tank_drive.on_for_seconds(direction, SpeedPercent(75), 0.86 * multiply)
+            multiply = 2
             tank_drive.off()
         else:
             tank_drive.on(0, SpeedPercent(100))
-        if distance == 0: return
+            multiply = 1
+            direction = -100
+        if distance == 0:
+            return
         last3_numbers[0] = last3_numbers[1]
         last3_numbers[1] = last3_numbers[2]
         last3_numbers[2] = distance
