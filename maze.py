@@ -52,17 +52,25 @@ def main():
     last3_numbers = [100, 100, 100]
     multiply = 1
     direction = -100
+    last_direction = int
+    box_turns = 0
     while not e_stop.value():
         distance = round(distance_sensor.value())
         distance_average = round(sum(last3_numbers, distance)/4)
-        if distance_average <= 15 and distance != 0 and distance_average != 0:
+        if distance_average <= 10 and distance != 0 and distance_average != 0:
             tank_drive.off()
             if multiply == 2:
                 direction = direction * -1
+            if box_turns == 4:
+                direction = direction * -1
+                box_turns = 1
             tank_drive.on_for_seconds(0, SpeedPercent(-75), 0.1)
             tank_drive.on_for_rotations(direction, SpeedPercent(75), 1.5 * multiply)
             multiply = 2
             tank_drive.off()
+            if (last_direction == direction):
+                box_turns += 1
+            last_direction = direction
         else:
             tank_drive.on(0, SpeedPercent(100))
             multiply = 1
