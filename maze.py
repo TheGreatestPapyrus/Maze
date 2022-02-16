@@ -15,13 +15,11 @@ OFF = False
 
 distance_sensor = UltrasonicSensor(INPUT_1)
 e_stop = TouchSensor(INPUT_4)
-
 distance_sensor.mode = 'US-DIST-CM'
 
 
 def debug_print(*args, **kwargs):
     print(*args, **kwargs, file=sys.stderr)
-
 
 def reset_console():
     print('\x1Bc', end='')
@@ -59,11 +57,10 @@ def main():
         distance_average = round(sum(last3_numbers, distance)/4)
         if distance_average <= 15 and distance != 0 and distance_average != 0:
             tank_drive.off()
-            debug_print(multiply)
             if multiply == 2:
                 direction = direction * -1
             tank_drive.on_for_seconds(0, SpeedPercent(-75), 0.1)
-            tank_drive.on_for_seconds(direction, SpeedPercent(75), 0.86 * multiply)
+            tank_drive.on_for_rotations(direction, SpeedPercent(75), 1.5 * multiply)
             multiply = 2
             tank_drive.off()
         else:
