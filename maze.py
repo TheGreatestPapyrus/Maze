@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from curses import doupdate
 from dis import dis
 import random
 
@@ -54,6 +55,8 @@ def main():
     direction = -100
     last_direction = int
     box_turns = 0
+    doubleWall = False
+    box_turn_number = 2
     while not e_stop.value():
         distance = round(distance_sensor.value())
         distance_average = round(sum(last3_numbers, distance)/4)
@@ -61,15 +64,20 @@ def main():
             tank_drive.off()
             if multiply == 2:
                 direction = direction * -1
-            if box_turns == 4:
+                doubleWall = True
+            if box_turns % box_turn_number == 0 and box_turns != 0:
+                if (box_turn_number == 0):
+                    box_turn_number = 2
                 direction = direction * -1
                 box_turns = 1
+                box_turn_number -= 1
             tank_drive.on_for_seconds(0, SpeedPercent(-75), 0.1)
             tank_drive.on_for_rotations(direction, SpeedPercent(75), 1.5 * multiply)
             multiply = 2
             tank_drive.off()
-            if (last_direction == direction):
+            if (last_direction == direction or doubleWall):
                 box_turns += 1
+                doubleWall = False
             last_direction = direction
         else:
             tank_drive.on(0, SpeedPercent(100))
